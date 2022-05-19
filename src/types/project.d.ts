@@ -1,6 +1,5 @@
 export interface ParamsType {
-  serachText: string | undefined
-  pageNo: number
+  searchText: string | undefined
 }
 
 export interface ResponseItemTpye {
