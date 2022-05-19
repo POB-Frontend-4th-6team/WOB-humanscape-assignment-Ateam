@@ -2,9 +2,9 @@
 @use '/src/styles/constants/colors';
 
 .inputBox {
-  @include flexbox.flexbox(0, center);
+  @include flexbox.flexbox(between, center);
   flex-direction: row;
-  width: 60%;
+  width: 700px;
   height: 70px;
   margin-top: 15px;
   background-color: colors.$WHITE;
@@ -12,13 +12,14 @@
 
   .iconBox {
     @include flexbox.flexbox(center, center);
-    width: 15%;
+    padding-left: 25px;
   }
 
   .input {
-    width: 70%;
+    width: 80%;
     font-size: 18px;
     font-weight: 400;
+    padding-left: 10px;
   }
 
   .btn {
@@ -33,12 +34,4 @@
   }
 }
 
-.resultBox {
-  display: inline-block;
-  width: 60%;
-  height: 60%;
-  margin-top: 10px;
-  overflow-y: auto;
-  background-color: colors.$WHITE;
-  border-radius: 20px;
-}
+

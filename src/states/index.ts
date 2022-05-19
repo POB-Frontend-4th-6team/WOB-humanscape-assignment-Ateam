@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import system from './system'
 import todo from './todo'
+import diease from './diease'
 
 export const store = configureStore({
   reducer: {
     system,
     todo,
+    diease,
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
