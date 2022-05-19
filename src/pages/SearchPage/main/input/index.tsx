@@ -1,21 +1,13 @@
 import { SearchIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback } from 'react'
 import { debounce } from 'lodash'
 import { useAppDispatch } from 'hooks'
 import { setSearchText } from 'states/disease'
 
 import styles from './input.module.scss'
-// import { useRecoilState } from 'recoil'
-// import { getSerachData } from 'services/search'
-// import { SerachResultState, SerachState } from 'states/state'
-// import Result from '../result'
 
 const Input = () => {
-  // const [serachState, setSerachState] = useRecoilState(SerachState)
-  // const [serachResultState, SetSerachResultState] = useRecoilState(SerachResultState)
   // const [moveNum, setMoveNum] = useState(0)
-  // const targetItem = serachResultState
 
   const dispatch = useAppDispatch()
 

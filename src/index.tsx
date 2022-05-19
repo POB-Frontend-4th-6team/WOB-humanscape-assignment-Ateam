@@ -2,14 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import reportWebVitals from './reportWebVitals'
-
 import { Provider } from 'react-redux'
-import { RecoilRoot } from 'recoil'
 
 import { store } from './states'
 import './styles/index.scss'
 import Main from './pages'
+import reportWebVitals from './reportWebVitals'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnMount: false } },
@@ -21,9 +19,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <Provider store={store}>
-        <RecoilRoot>
-          <Main />
-        </RecoilRoot>
+        <Main />
       </Provider>
     </QueryClientProvider>
   </React.StrictMode>

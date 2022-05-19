@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
 
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
-import disease, { getSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
+import { getSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
 import { getSerachData } from 'services/search'
-import { IDiseaseItem, IDiseaseResponse } from 'types/disease.d'
+import { IDiseaseItem } from 'types/disease.d'
 
 import { SearchIcon } from 'assets/svgs'
 import styles from './result.module.scss'
