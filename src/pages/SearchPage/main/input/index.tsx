@@ -1,75 +1,73 @@
-import { SerachIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { getSerachData } from 'services/serach'
-import { SerachResultState, SerachState } from 'states/state'
-import Result from '../result'
+import { SearchIcon } from 'assets/svgs'
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { debounce } from 'lodash'
+// import { useRecoilState } from 'recoil'
+
+import { searchActions } from 'states/diease'
+// import { getSerachData } from 'services/search'
+// import { SerachResultState, SerachState } from 'states/state'
+// import Result from '../result'
 import styles from './input.module.scss'
 
 const Input = () => {
-  const [serachState, setSerachState] = useRecoilState(SerachState)
-  const [serachResultState, SetSerachResultState] = useRecoilState(SerachResultState)
+  // const [serachState, setSerachState] = useRecoilState(SerachState)
+  // const [serachResultState, SetSerachResultState] = useRecoilState(SerachResultState)
+  // const [moveNum, setMoveNum] = useState<number>(0)
+  // const targetItem = serachResultState
 
-  const [moveNum, setMoveNum] = useState<number>(0)
+  const dispatch = useDispatch()
 
-  const targetItem = serachResultState
+  const debounceFunc = debounce((value) => {
+    dispatch(searchActions.searchValue(value))
+  }, 500)
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget
-    setSerachState(value)
-  }
+  const handleSearch = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      debounceFunc(e.currentTarget.value)
+    },
+    [debounceFunc]
+  )
 
-  // onChange에 getSerachData로직을 넣어야함 지금은 너무 느려서 일단 submit에 넣어둠
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    SetSerachResultState([{ sickCd: '123', sickNm: serachState }])
-    getSerachData({ serachText: serachState, pageNo: 1 }).then((result) => {
-      try {
-        if (!serachResultState) return
-        SetSerachResultState((prev) => [...prev, ...result.data.response.body.items.item])
-      } catch (err) {
-        throw new Error()
-      }
-    })
-  }
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => e.preventDefault()
 
-  const moveCells = (direction: string) => {
-    if (!targetItem) return // 이거 안쓰면 조건문 에러
-    if (direction === 'up' && moveNum) setMoveNum((prev) => prev - 1)
-    else if (direction === 'down' && moveNum < Number(targetItem?.length) - 1) setMoveNum((prev) => prev + 1)
-  }
+  // 키보드로 검색어 이동
+  // const moveCells = (direction: string) => {
+  //   if (!targetItem) return // 이거 안쓰면 조건문 에러
+  //   if (direction === 'up' && moveNum) setMoveNum((prev) => prev - 1)
+  //   else if (direction === 'down' && moveNum < Number(targetItem?.length) - 1) setMoveNum((prev) => prev + 1)
+  // }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (!serachResultState) return
-    if (e.key === 'ArrowUp') moveCells('up')
-    else if (e.key === 'ArrowDown') moveCells('down')
+    // if (!serachResultState) return
+    // if (e.key === 'ArrowUp') moveCells('up')
+    // else if (e.key === 'ArrowDown') moveCells('down')
   }
 
-  useEffect(() => {
-    if (!targetItem) return
-    setSerachState(targetItem[moveNum].sickNm)
-  }, [moveNum, targetItem, setSerachState])
+  // useEffect(() => {
+  //   if (!targetItem) return
+  //   setSerachState(targetItem[moveNum].sickNm)
+  // }, [moveNum, setSerachState, targetItem])
 
   return (
-    <>
-      <form className={styles.inputBox} onSubmit={onSubmit}>
+    <section className={styles.section2}>
+      <form className={styles.inputBox} onSubmit={handleSubmit}>
         <div className={styles.iconBox}>
-          <SerachIcon width='20px' height='20px' />
+          <SearchIcon width='20px' height='20px' />
         </div>
         <input
           placeholder='질환명을 입력해 주세요.'
           type='text'
           className={styles.input}
-          value={serachState}
-          onChange={onChange}
+          onChange={handleSearch}
           onKeyDown={onKeyDown}
         />
         <button type='button' className={styles.btn}>
           검색
         </button>
       </form>
-      {serachState && <div className={styles.resultBox}>{serachResultState && <Result />}</div>}
-    </>
+      {/* {serachState && <div className={styles.resultBox}>{serachResultState && <Result />}</div>} */}
+    </section>
   )
 }
 
