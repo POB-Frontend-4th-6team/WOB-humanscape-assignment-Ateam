@@ -1,5 +1,24 @@
+@use '/src/styles/mixins/flexbox';
+
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexbox.flexbox(center, center);
+  width: 100%;
+  height: 80%;
+  background-color: #cae9ff;
+
+  .containerBox {
+    @include flexbox.flexbox(0, center);
+    flex-direction: column;
+    width: 60%;
+    height: 70%;
+
+    .title {
+      width: 80%;
+      font-size: 2.125rem;
+      font-weight: 700;
+      line-height: 1.6;
+      text-align: center;
+      letter-spacing: -0.018em;
+    }
+  }
 }
