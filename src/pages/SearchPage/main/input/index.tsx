@@ -1,25 +1,18 @@
 import { SearchIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback } from 'react'
 import { debounce } from 'lodash'
-// import { useRecoilState } from 'recoil'
+import { useAppDispatch } from 'hooks'
+import { setSearchText } from 'states/disease'
 
-import { searchActions } from 'states/diease'
-// import { getSerachData } from 'services/search'
-// import { SerachResultState, SerachState } from 'states/state'
-// import Result from '../result'
 import styles from './input.module.scss'
 
 const Input = () => {
-  // const [serachState, setSerachState] = useRecoilState(SerachState)
-  // const [serachResultState, SetSerachResultState] = useRecoilState(SerachResultState)
-  // const [moveNum, setMoveNum] = useState<number>(0)
-  // const targetItem = serachResultState
+  // const [moveNum, setMoveNum] = useState(0)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const debounceFunc = debounce((value) => {
-    dispatch(searchActions.searchValue(value))
+    dispatch(setSearchText(value))
   }, 500)
 
   const handleSearch = useCallback(
@@ -29,8 +22,8 @@ const Input = () => {
     [debounceFunc]
   )
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => e.preventDefault()
-
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {}
+  // e.preventDefault()
   // 키보드로 검색어 이동
   // const moveCells = (direction: string) => {
   //   if (!targetItem) return // 이거 안쓰면 조건문 에러

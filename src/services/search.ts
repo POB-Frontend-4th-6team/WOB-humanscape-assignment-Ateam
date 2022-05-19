@@ -1,8 +1,8 @@
-import { ResponseTpye, ParamsType } from '../types/project.d'
+import { IDiseaseResponse, IDiseaseParams } from 'types/disease.d'
 import axios from 'axios'
 
-export const getSerachData = (params: ParamsType) => {
-  return axios.get<ResponseTpye>(`${process.env.REACT_APP_BASE_URL}`, {
+export const getSerachData = (params: IDiseaseParams) => {
+  return axios.get<IDiseaseResponse>(`${process.env.REACT_APP_BASE_URL}`, {
     params: {
       ...params,
       ServiceKey: process.env.REACT_APP_API_KEY,
