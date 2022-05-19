@@ -19,7 +19,8 @@ const Result = () => {
       enabled: !!searchText,
       refetchOnWindowFocus: false,
       useErrorBoundary: true,
-      staleTime: 6 * 10 * 1000,
+      cacheTime: 5 * 10 * 1000,
+      staleTime: 5 * 10 * 1000,
       onSuccess: () => {
         console.log(searchText, '검색어로 api 호출')
       },
