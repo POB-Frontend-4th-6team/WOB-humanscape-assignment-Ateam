@@ -1,0 +1,44 @@
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
+
+.inputBox {
+  @include flexbox.flexbox(0, center);
+  flex-direction: row;
+  width: 60%;
+  height: 70px;
+  margin-top: 15px;
+  background-color: colors.$WHITE;
+  border-radius: 40px;
+
+  .iconBox {
+    @include flexbox.flexbox(center, center);
+    width: 15%;
+  }
+
+  .input {
+    width: 70%;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .btn {
+    @include flexbox.flexbox(center, center);
+    width: 15%;
+    height: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    color: colors.$WHITE;
+    background-color: #007be9;
+    border-radius: 0 40px 40px 0;
+  }
+}
+
+.resultBox {
+  display: inline-block;
+  width: 60%;
+  height: 60%;
+  margin-top: 10px;
+  overflow-y: auto;
+  background-color: colors.$WHITE;
+  border-radius: 20px;
+}
