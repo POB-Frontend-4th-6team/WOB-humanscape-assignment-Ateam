@@ -26,6 +26,7 @@ const Result = () => {
       },
     }
   )
+
   useEffect(() => {
     let result: IDiseaseItem[]
     if (!data) {
