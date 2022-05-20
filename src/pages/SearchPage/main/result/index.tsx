@@ -33,11 +33,15 @@ const Result = () => {
       result = []
     } else if (!Array.isArray(data)) {
       result = [data]
+      if (!searchText) return
+      result.unshift({ sickCd: 'first', sickNm: searchText })
     } else {
       result = data
+      if (!searchText) return
+      result.unshift({ sickCd: 'first', sickNm: searchText })
     }
     dispatch(setDiseaseItems(result))
-  }, [data, dispatch])
+  }, [data, dispatch, searchText])
 
   if (isLoading)
     return (

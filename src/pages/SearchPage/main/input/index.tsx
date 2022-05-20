@@ -34,10 +34,8 @@ const Input = () => {
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.nativeEvent.isComposing) return // onKeyDown 처음 한글 입력시 함수 2번실행되는거 방지
-    setIsMoveOn(false) // 위 아래 이벤트 발생하지 않고 다른 keydown이벤트 발생시 IsMoveOn변경시켜 다시 api통신
-
-    if (diseaseItems.length === 0) return
+    setIsMoveOn(false)
+    if (diseaseItems.length === 0 || e.nativeEvent.isComposing) return
     if (e.key === 'ArrowUp' && moveNum) {
       setMoveNum((prev) => prev - 1)
       setIsMoveOn(true)
@@ -49,7 +47,7 @@ const Input = () => {
 
   useEffect(() => {
     if (diseaseItems.length === 0) return
-    if (isMoveOn) setDisease(diseaseItems[moveNum - 1].sickNm)
+    if (isMoveOn) setDisease(diseaseItems[moveNum].sickNm)
   }, [moveNum, diseaseItems, isMoveOn])
 
   return (
