@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const URL = `${process.env.REACT_APP_BASE_URL}`
 
-export const getSerachData = (splitSearchText: string[]) => {
+export const getSearchData = (splitSearchText: string[]) => {
   const requests = splitSearchText.map((word: string) => {
     return axios.get(URL, {
       params: {

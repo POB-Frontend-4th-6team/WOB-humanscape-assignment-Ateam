@@ -3,7 +3,7 @@ import { getRegExp } from 'korean-regexp'
 
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
 import { getSearchText, getSplitSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
-import { getSerachData } from 'services/search'
+import { getSearchData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
 
 import styles from './result.module.scss'
@@ -18,7 +18,7 @@ const Result = () => {
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
     () =>
-      getSerachData(splitSearchText).then((res) => {
+      getSearchData(splitSearchText).then((res) => {
         const everyDataArray = []
 
         for (let i = 0; i < res.length; i += 1) {
