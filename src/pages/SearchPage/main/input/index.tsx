@@ -1,13 +1,17 @@
 import { SearchIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useCallback } from 'react'
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
 import { debounce } from 'lodash'
-import { useAppDispatch } from 'hooks'
-import { setSearchText } from 'states/disease'
+import { useAppDispatch, useAppSelector } from 'hooks'
+import { getDiseaseItems, setSearchText } from 'states/disease'
 
 import styles from './input.module.scss'
 
 const Input = () => {
-  // const [moveNum, setMoveNum] = useState(0)
+  const diseaseItems = useAppSelector(getDiseaseItems)
+
+  const [disease, setDisease] = useState<string | undefined>('')
+  const [moveNum, setMoveNum] = useState(0)
+  const [isMoveOn, setIsMoveOn] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -17,30 +21,34 @@ const Input = () => {
 
   const handleSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      setDisease(e.currentTarget.value)
+      if (isMoveOn) return
       debounceFunc(e.currentTarget.value)
+      setMoveNum(0)
     },
-    [debounceFunc]
+    [debounceFunc, setDisease, isMoveOn]
   )
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {}
-  // e.preventDefault()
-  // 키보드로 검색어 이동
-  // const moveCells = (direction: string) => {
-  //   if (!targetItem) return // 이거 안쓰면 조건문 에러
-  //   if (direction === 'up' && moveNum) setMoveNum((prev) => prev - 1)
-  //   else if (direction === 'down' && moveNum < Number(targetItem?.length) - 1) setMoveNum((prev) => prev + 1)
-  // }
-
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    // if (!serachResultState) return
-    // if (e.key === 'ArrowUp') moveCells('up')
-    // else if (e.key === 'ArrowDown') moveCells('down')
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
   }
 
-  // useEffect(() => {
-  //   if (!targetItem) return
-  //   setSerachState(targetItem[moveNum].sickNm)
-  // }, [moveNum, setSerachState, targetItem])
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    setIsMoveOn(false)
+    if (diseaseItems.length === 0 || e.nativeEvent.isComposing) return
+    if (e.key === 'ArrowUp' && moveNum) {
+      setMoveNum((prev) => prev - 1)
+      setIsMoveOn(true)
+    } else if (e.key === 'ArrowDown' && moveNum < Number(diseaseItems.length) - 1) {
+      setMoveNum((prev) => prev + 1)
+      setIsMoveOn(true)
+    }
+  }
+
+  useEffect(() => {
+    if (diseaseItems.length === 0) return
+    if (isMoveOn) setDisease(diseaseItems[moveNum].sickNm)
+  }, [moveNum, diseaseItems, isMoveOn])
 
   return (
     <section className={styles.section2}>
@@ -54,12 +62,12 @@ const Input = () => {
           className={styles.input}
           onChange={handleSearch}
           onKeyDown={onKeyDown}
+          value={disease}
         />
         <button type='button' className={styles.btn}>
           검색
         </button>
       </form>
-      {/* {serachState && <div className={styles.resultBox}>{serachResultState && <Result />}</div>} */}
     </section>
   )
 }
