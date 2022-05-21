@@ -21,18 +21,3 @@ export const getSerachData = (splitSearchText: string[]) => {
     })
   )
 }
-
-// export const getSerachData = (params: IDiseaseParams) => {
-//   return axios.get<IDiseaseResponse>(URL, {
-//     params: {
-//       ...params,
-//       ServiceKey: process.env.REACT_APP_API_KEY,
-//       pageNo: 1,
-//       numOfRows: 10,
-//       sickType: 1,
-//       medTp: 2,
-//       diseaseType: 'SICK_NM',
-//       _type: 'json',
-//     },
-//   })
-// }
