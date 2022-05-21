@@ -1,6 +1,6 @@
-import Header from './components/Headers'
+import Header from './components/Header'
 import SearchPage from './SearchPage'
-import Footer from './components/Footers'
+import Footer from './components/Footer'
 import styles from './Pages.module.scss'
 
 const Main = () => {
