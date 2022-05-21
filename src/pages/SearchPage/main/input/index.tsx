@@ -11,10 +11,16 @@ const Input = () => {
 
   const dispatch = useAppDispatch()
 
-  const debounceFunc = debounce((value) => {
+  const changeTextToArrayWithNoEmptyString = (value: string) => {
     const searchTextToArray = value.split('')
     const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word != ' ')
-    dispatch(setSearchText(arrayWithNoEmptyString))
+
+    return arrayWithNoEmptyString
+  }
+
+  const debounceFunc = debounce((value) => {
+    const textArray = changeTextToArrayWithNoEmptyString(value)
+    dispatch(setSearchText(textArray))
   }, 1000)
 
   const handleSearch = useCallback(

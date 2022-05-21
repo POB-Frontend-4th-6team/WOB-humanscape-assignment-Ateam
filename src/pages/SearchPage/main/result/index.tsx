@@ -11,33 +11,26 @@ import styles from './result.module.scss'
 
 const Result = () => {
   const dispatch = useAppDispatch()
-  const searchText = useAppSelector(getSearchText) // 검색어
+  const searchText = useAppSelector(getSearchText)
   const diseaseItems = useAppSelector(getDiseaseItems)
 
   const { data, isLoading } = useQuery(
     ['getDieaseApi', searchText],
     () =>
       getSerachData(searchText).then((res: any) => {
-        const everyDataArray = []
+        let everyDataArray = []
+
         for (let i = 0; i < res.length; i += 1) {
           everyDataArray.push(...res[i].data.response.body.items.item)
         }
-        console.log(everyDataArray)
+
         const noDuplicateArray = everyDataArray.filter(
           (element, index, self) => index === self.findIndex((ele) => ele.sickCd === element.sickCd)
         )
 
-        const fuzzyRegex = getRegExp(searchText.join(''), {
-          fuzzy: true,
-          ignoreSpace: true,
-          ignoreCase: false,
-          global: true,
-          initialSearch: true,
-        })
+        const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzySearchRegex))
 
-        const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzyRegex))
-
-        return regexFilteredArray
+        return regexFilteredArray.slice(0, 10)
       }),
     {
       enabled: !!searchText,
@@ -51,14 +44,17 @@ const Result = () => {
     }
   )
 
-  console.log(searchText)
+  const fuzzySearchRegex = getRegExp(searchText.join(''), {
+    fuzzy: true,
+    ignoreSpace: true,
+    ignoreCase: false,
+    global: true,
+  })
 
   useEffect(() => {
     let result: IDiseaseItem[]
     if (!data) {
       result = []
-    } else if (!Array.isArray(data)) {
-      result = [data]
     } else {
       result = data
     }
