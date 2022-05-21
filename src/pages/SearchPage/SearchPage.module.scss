@@ -1,11 +1,12 @@
 @use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
 
 .container {
   @include flexbox.flexbox(0, center);
   flex-direction: column;
   width: 100%;
   min-height: 80vh;
-  background-color: #cae9ff;
+  background-color: colors.$BG_COLOR;
   padding: 80px 0;
 
   .title {
