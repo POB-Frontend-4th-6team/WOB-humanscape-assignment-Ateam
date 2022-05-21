@@ -33,3 +33,9 @@
     border-radius: 0 40px 40px 0;
   }
 }
+
+@media screen and (max-width: 770px) {
+  .inputBox {
+    width: 500px;
+  }
+}
