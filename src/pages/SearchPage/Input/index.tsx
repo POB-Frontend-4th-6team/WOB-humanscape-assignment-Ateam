@@ -5,29 +5,28 @@ import { useAppDispatch, useAppSelector, useCallback, useEffect, useState } from
 import { getDiseaseItems, setSearchText, setSplitSearchText } from 'states/disease'
 import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
 
-import styles from './input.module.scss'
+import styles from './Input.module.scss'
 import { SearchIcon } from 'assets/svgs'
 
 const Input = () => {
-  const diseaseItems = useAppSelector(getDiseaseItems)
-  const moveNum = useAppSelector(getMoveNum)
-
   const [disease, setDisease] = useState<string | undefined>('')
   const [isMoveOn, setIsMoveOn] = useState(false)
 
+  const diseaseItems = useAppSelector(getDiseaseItems)
+  const moveNum = useAppSelector(getMoveNum)
   const dispatch = useAppDispatch()
 
-  const changeTextToArrayWithNoEmptyString = (value: string) => {
-    const searchTextToArray = value.split('')
-    const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word !== ' ')
+  useEffect(() => {
+    if (diseaseItems.length === 0) return
+    if (isMoveOn) setDisease(diseaseItems[moveNum].sickNm)
+  }, [moveNum, diseaseItems, isMoveOn])
 
-    return arrayWithNoEmptyString
-  }
+  const changeTextToArray = (text: string) => text.split('').filter((word: string) => word !== ' ')
 
   const debounceFunc = useMemo(
     () =>
       debounce((value) => {
-        const textArray = changeTextToArrayWithNoEmptyString(value)
+        const textArray = changeTextToArray(value)
         dispatch(setSearchText(value))
         dispatch(setSplitSearchText(textArray))
       }, 700),
@@ -59,11 +58,6 @@ const Input = () => {
       setIsMoveOn(true)
     }
   }
-
-  useEffect(() => {
-    if (diseaseItems.length === 0) return
-    if (isMoveOn) setDisease(diseaseItems[moveNum].sickNm)
-  }, [moveNum, diseaseItems, isMoveOn])
 
   return (
     <section>
