@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector, useCallback, useEffect, useState } from
 import { getDiseaseItems, setSearchText, setSplitSearchText } from 'states/disease'
 import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
 
-import styles from './input.module.scss'
+import styles from './Input.module.scss'
 import { SearchIcon } from 'assets/svgs'
 
 const Input = () => {

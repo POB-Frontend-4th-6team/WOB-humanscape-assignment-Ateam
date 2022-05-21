@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks'
 import { getMoveNum } from 'states/move'
 import { IDiseaseItem } from 'types/disease'
 
-import styles from './result.module.scss'
+import styles from './Result.module.scss'
 import { SearchIcon } from 'assets/svgs'
 import { cx } from 'styles'
 

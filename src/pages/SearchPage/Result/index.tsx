@@ -6,7 +6,7 @@ import { getSearchText, getSplitSearchText, getDiseaseItems, setDiseaseItems } f
 import { getSearchData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
 
-import styles from './result.module.scss'
+import styles from './Result.module.scss'
 import Contents from './Contents'
 
 const Result = () => {
