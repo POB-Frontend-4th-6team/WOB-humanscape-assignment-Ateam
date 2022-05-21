@@ -7,7 +7,7 @@ import { getSearchData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
 
 import styles from './result.module.scss'
-import List from './List'
+import Contents from './Contents'
 
 const Result = () => {
   const [count, setCount] = useState(0)
@@ -16,6 +16,13 @@ const Result = () => {
   const searchText = useAppSelector(getSearchText)
   const splitSearchText = useAppSelector(getSplitSearchText)
   const diseaseItems = useAppSelector(getDiseaseItems)
+
+  const fuzzySearchRegex = getRegExp(splitSearchText.join(''), {
+    fuzzy: true,
+    ignoreCase: false,
+    ignoreSpace: true,
+    global: true,
+  })
 
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
@@ -54,15 +61,9 @@ const Result = () => {
     }
   )
 
-  const fuzzySearchRegex = getRegExp(splitSearchText.join(''), {
-    fuzzy: true,
-    ignoreCase: false,
-    ignoreSpace: true,
-    global: true,
-  })
-
   useEffect(() => {
     let result: IDiseaseItem[]
+
     if (data?.length === 0 || data === undefined) {
       result = []
     } else {
@@ -74,30 +75,15 @@ const Result = () => {
     dispatch(setDiseaseItems(result))
   }, [data, dispatch, searchText])
 
-  if (isLoading)
+  if (searchText) {
     return (
       <section className={styles.resultContainer}>
-        <span className={styles.loading}>검색중..</span>
+        <Contents searchText={searchText} isLoading={isLoading} diseaseItems={diseaseItems} />
       </section>
     )
+  }
 
-  if (diseaseItems.length === 0 && searchText)
-    return (
-      <section className={styles.resultContainer}>
-        <span className={styles.noResult}>검색어 없음</span>
-      </section>
-    )
-
-  if (!searchText) return <div />
-
-  return (
-    <section className={styles.resultContainer}>
-      <h2>추천 검색어</h2>
-      <ul className={styles.resultBox}>
-        <List diseaseItems={diseaseItems} searchText={searchText} />
-      </ul>
-    </section>
-  )
+  return <div />
 }
 
 export default Result
