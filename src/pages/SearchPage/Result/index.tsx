@@ -18,7 +18,7 @@ const Result = () => {
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
     () =>
-      getSerachData(splitSearchText).then((res: any[]) => {
+      getSerachData(splitSearchText).then((res) => {
         const everyDataArray = []
 
         for (let i = 0; i < res.length; i += 1) {

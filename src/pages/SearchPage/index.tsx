@@ -1,5 +1,5 @@
-import Input from './main/input'
-import Result from './main/result'
+import Input from './Input'
+import Result from './Result'
 import styles from './SearchPage.module.scss'
 
 const SearchPage = () => {
