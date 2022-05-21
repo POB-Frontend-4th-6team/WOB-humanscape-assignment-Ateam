@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Dispatch, SetStateAction } from 'react'
 
-const URL = `${process.env.REACT_APP_BASE_URL}`
+const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy'
+
+const URL = `${PROXY}${process.env.REACT_APP_BASE_URL}`
 
 export const getSearchData = (splitSearchText: string[], setCount: Dispatch<SetStateAction<number>>) => {
   const requests = splitSearchText.map((word: string) => {
