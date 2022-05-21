@@ -17,20 +17,21 @@ const Result = () => {
   const { data, isLoading } = useQuery(
     ['getDieaseApi', searchText],
     () =>
-      getSerachData(searchText).then((res: any) => {
-        let everyDataArray = []
+      getSerachData({ searchText }).then((res: any) => {
+        // let everyDataArray = []
 
-        for (let i = 0; i < res.length; i += 1) {
-          everyDataArray.push(...res[i].data.response.body.items.item)
-        }
+        // for (let i = 0; i < res.length; i += 1) {
+        //   everyDataArray.push(...res[i].data.response.body.items.item)
+        // }
 
-        const noDuplicateArray = everyDataArray.filter(
-          (element, index, self) => index === self.findIndex((ele) => ele.sickCd === element.sickCd)
-        )
+        // const noDuplicateArray = everyDataArray.filter(
+        //   (element, index, self) => index === self.findIndex((ele) => ele.sickCd === element.sickCd)
+        // )
 
-        const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzySearchRegex))
+        // const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzySearchRegex))
 
-        return regexFilteredArray.slice(0, 10)
+        // return regexFilteredArray.slice(0, 10)
+        return res.data.response.body.items.item
       }),
     {
       enabled: !!searchText,
@@ -44,12 +45,12 @@ const Result = () => {
     }
   )
 
-  const fuzzySearchRegex = getRegExp(searchText.join(''), {
-    fuzzy: true,
-    ignoreCase: false,
-    ignoreSpace: true,
-    global: true,
-  })
+  // const fuzzySearchRegex = getRegExp(searchText.join(''), {
+  //   fuzzy: true,
+  //   ignoreCase: false,
+  //   ignoreSpace: true,
+  //   global: true,
+  // })
 
   useEffect(() => {
     let result: IDiseaseItem[]

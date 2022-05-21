@@ -1,5 +1,5 @@
 export interface IDiseaseParams {
-  searchText: any
+  searchText: string | undefined
 }
 
 export interface IDiseaseItem {

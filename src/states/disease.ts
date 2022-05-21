@@ -3,12 +3,12 @@ import { IDiseaseItem } from 'types/disease.d'
 import type { RootState } from '.'
 
 export interface SearchState {
-  searchText: string[]
+  searchText: string
   items: IDiseaseItem[]
 }
 
 const INITAL_STATE: SearchState = {
-  searchText: [],
+  searchText: '',
   items: [],
 }
 
@@ -16,7 +16,7 @@ export const diseaseSearchSlice = createSlice({
   name: 'dieaseSearch',
   initialState: INITAL_STATE,
   reducers: {
-    setSearchText: (state: SearchState, action: PayloadAction<string[]>) => {
+    setSearchText: (state: SearchState, action: PayloadAction<string>) => {
       state.searchText = action.payload
     },
     setDiseaseItems: (state: SearchState, action: PayloadAction<IDiseaseItem[]>) => {
@@ -28,7 +28,7 @@ export const diseaseSearchSlice = createSlice({
 // export const searchActions = diseaseSearchSlice.actions
 export const { setSearchText, setDiseaseItems } = diseaseSearchSlice.actions
 
-export const getSearchText = (state: RootState): any => state.disease.searchText
+export const getSearchText = (state: RootState): string => state.disease.searchText
 export const getDiseaseItems = (state: RootState): IDiseaseItem[] => state.disease.items
 
 export default diseaseSearchSlice.reducer

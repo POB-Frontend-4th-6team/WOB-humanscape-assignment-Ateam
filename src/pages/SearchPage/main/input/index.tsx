@@ -1,5 +1,5 @@
 import { SearchIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState, useMemo } from 'react'
 import { debounce } from 'lodash'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { getDiseaseItems, setSearchText } from 'states/disease'
@@ -22,10 +22,14 @@ const Input = () => {
     return arrayWithNoEmptyString
   }
 
-  const debounceFunc = debounce((value) => {
-    const textArray = changeTextToArrayWithNoEmptyString(value)
-    dispatch(setSearchText(textArray))
-  }, 700)
+  const debounceFunc = useMemo(
+    () =>
+      debounce((value) => {
+        // const textArray = changeTextToArrayWithNoEmptyString(value)
+        dispatch(setSearchText(value))
+      }, 700),
+    [dispatch]
+  )
 
   const handleSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
