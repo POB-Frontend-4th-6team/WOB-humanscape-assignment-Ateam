@@ -1,0 +1,35 @@
+@use '/src/styles/mixins/flexbox';
+@use '/src/styles/constants/colors';
+
+.inputBox {
+  @include flexbox.flexbox(between, center);
+  flex-direction: row;
+  width: 700px;
+  height: 70px;
+  margin-top: 15px;
+  background-color: colors.$WHITE;
+  border-radius: 40px;
+
+  .iconBox {
+    @include flexbox.flexbox(center, center);
+    padding-left: 25px;
+  }
+
+  .input {
+    width: 80%;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .btn {
+    @include flexbox.flexbox(center, center);
+    width: 15%;
+    height: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    color: colors.$WHITE;
+    background-color: colors.$SEARCH_BTN;
+    border-radius: 0 40px 40px 0;
+  }
+}

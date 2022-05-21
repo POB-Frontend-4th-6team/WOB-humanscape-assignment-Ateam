@@ -1,14 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import reportWebVitals from './reportWebVitals'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { Provider } from 'react-redux'
 
+import { store } from './states'
 import './styles/index.scss'
 import Main from './pages'
+import reportWebVitals from './reportWebVitals'
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnMount: false } },
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <Main />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>
 )
 
