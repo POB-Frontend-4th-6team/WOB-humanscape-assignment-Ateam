@@ -8,12 +8,15 @@ import { IDiseaseItem } from 'types/disease.d'
 
 import { SearchIcon } from 'assets/svgs'
 import styles from './result.module.scss'
+import { getMoveNum } from 'states/move'
+import { cx } from 'styles'
 
 const Result = () => {
   const dispatch = useAppDispatch()
   const searchText = useAppSelector(getSearchText)
   const splitSearchText = useAppSelector(getSplitSearchText)
   const diseaseItems = useAppSelector(getDiseaseItems)
+  const moveNum = useAppSelector(getMoveNum)
 
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
@@ -91,12 +94,13 @@ const Result = () => {
     <section className={styles.section3}>
       <h2>추천 검색어</h2>
       <ul className={styles.resultBox}>
-        {diseaseItems.map((li: IDiseaseItem) => (
-          <li className={styles.item} key={`sickcd-key-${li.sickCd}`}>
+        {diseaseItems.map((li: IDiseaseItem, i) => (
+          <li className={cx(styles.item, { [styles.selectedMoveNum]: moveNum === i })} key={`sickcd-key-${li.sickCd}`}>
             <div className={styles.iconBox}>
               <SearchIcon width='20px' height='20px' />
             </div>
             <p className={styles.t1itle}>{li.sickNm} </p>
+            {diseaseItems[0] === li && <p className={styles.nowSearch}> - 현재 검색어</p>}
           </li>
         ))}
       </ul>

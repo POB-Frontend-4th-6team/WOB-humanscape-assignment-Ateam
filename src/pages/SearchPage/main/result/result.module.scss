@@ -46,9 +46,22 @@
         letter-spacing: -0.018em;
       }
 
+      .nowSearch {
+        margin-left: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6;
+        color: colors.$GRAYA;
+        letter-spacing: -0.018em;
+      }
+
       &:hover {
         background: colors.$HOVER_COLOR;
       }
+    }
+
+    .selectedMoveNum {
+      background-color: colors.$HOVER_COLOR;
     }
 
     .noResult,
