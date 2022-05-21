@@ -35,7 +35,8 @@ const Result = () => {
       if (!searchText) return
       result = !Array.isArray(data) ? [data] : data
       result = [{ sickCd: 'first', sickNm: searchText }, ...result]
-    }
+    } 
+    
     dispatch(setDiseaseItems(result))
   }, [data, dispatch, searchText])
 
