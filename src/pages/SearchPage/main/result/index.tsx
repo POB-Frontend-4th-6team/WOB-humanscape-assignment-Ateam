@@ -9,7 +9,7 @@ import { IDiseaseItem } from 'types/disease.d'
 import { SearchIcon } from 'assets/svgs'
 import styles from './result.module.scss'
 import { getMoveNum } from 'states/move'
-import classnames from 'classnames'
+import { cx } from 'styles'
 
 const Result = () => {
   const dispatch = useAppDispatch()
@@ -95,10 +95,7 @@ const Result = () => {
       <h2>추천 검색어</h2>
       <ul className={styles.resultBox}>
         {diseaseItems.map((li: IDiseaseItem, i) => (
-          <li
-            className={classnames(styles.item, { [styles.selectedMoveNum]: moveNum === i })}
-            key={`sickcd-key-${li.sickCd}`}
-          >
+          <li className={cx(styles.item, { [styles.selectedMoveNum]: moveNum === i })} key={`sickcd-key-${li.sickCd}`}>
             <div className={styles.iconBox}>
               <SearchIcon width='20px' height='20px' />
             </div>

@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
+import { ChangeEvent, FormEvent, KeyboardEvent, useMemo } from 'react'
 import { debounce } from 'lodash'
 import { useAppDispatch, useAppSelector, useCallback, useEffect, useState } from 'hooks'
-import { getDiseaseItems, setSearchText } from 'states/disease'
+import { getDiseaseItems, setSearchText, setSplitSearchText } from 'states/disease'
 import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
 
 import styles from './input.module.scss'
