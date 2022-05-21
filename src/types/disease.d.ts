@@ -4,10 +4,9 @@ export interface IDiseaseParams {
 
 export interface IDiseaseItem {
   sickCd: string
-  sickNm: string | undefined
+  sickNm: string
 }
 
-// 원래 주석
 export interface IDiseaseItems {
   item: IDiseaseItem[]
 }
