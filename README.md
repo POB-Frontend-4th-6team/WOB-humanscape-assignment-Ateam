@@ -1,4 +1,6 @@
 # Human Scape Search Recommend Web
+## 웹 주소
+주소: https://wanted-humanscape-6a.netlify.app/
 ## 파일 구조
 ```
 ├─assets
