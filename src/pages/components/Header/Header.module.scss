@@ -20,12 +20,14 @@
       cursor: pointer;
     }
 
-    .rghit {
-      @include flexbox.flexbox(center, center);
-      justify-content: space-between;
-      width: 170px;
-      height: 56px;
-      font-size: 1rem;
+    .right {
+      ul {
+        @include flexbox.flexbox(center, center);
+        justify-content: space-between;
+        width: 170px;
+        height: 56px;
+        font-size: 1rem;
+      }
     }
   }
 }
