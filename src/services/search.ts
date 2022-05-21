@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Dispatch, SetStateAction } from 'react'
 
-const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy'
 
 const URL = `${PROXY}${process.env.REACT_APP_BASE_URL}`
 
