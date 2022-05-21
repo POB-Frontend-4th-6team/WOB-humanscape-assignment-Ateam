@@ -1,7 +1,7 @@
 import Header from './components/header'
-import styles from './Pages.module.scss'
 import SearchPage from './SearchPage'
-import Footer from './components/footer'
+import Footer from './components/Footer'
+import styles from './Pages.module.scss'
 
 const Main = () => {
   return (
