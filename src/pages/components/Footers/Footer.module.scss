@@ -3,9 +3,9 @@
 
 .footer {
   .subFooter {
-    background-color: colors.$SUB_FOOTER;
     padding: 24px 0;
-  
+    background-color: colors.$SUB_FOOTER;
+
     .container {
       position: relative;
       @include flexbox.flexbox(center, start);
@@ -14,25 +14,25 @@
       margin: 0 auto;
 
       h2 {
-        color: colors.$WHITE;
+        margin-bottom: 16px;
         font-size: 18px;
         font-weight: 700;
-        letter-spacing: -0.018em;
         line-height: 1.6;
-        margin-bottom: 16px;
+        color: colors.$WHITE;
+        letter-spacing: -0.018em;
       }
-  
+
       button {
-        border-radius: 24px;
-        background-color: colors.$WHITE;
         padding: 10px 24px;
-        color: colors.$FOOTER_BTN;
         font-size: 16px;
         font-weight: 400;
-        letter-spacing: -0.018em;
         line-height: 1.6;
+        color: colors.$FOOTER_BTN;
+        letter-spacing: -0.018em;
+        background-color: colors.$WHITE;
+        border-radius: 24px;
       }
-  
+
       .icon {
         svg {
           position: absolute;
@@ -42,11 +42,11 @@
       }
     }
   }
-  
+
   .footerInfo {
-    background-color: colors.$FOOTER_INFO;
-    color: colors.$FOOTER_INFO_TEXT;
     padding: 40px 0;
+    color: colors.$FOOTER_INFO_TEXT;
+    background-color: colors.$FOOTER_INFO;
 
     .container {
       width: 1040px;
@@ -55,16 +55,16 @@
 
       .footerLeft {
         h2 {
-          font-weight: 400;
-          letter-spacing: -0.018em;
-          line-height: 1.6;
           margin-bottom: 25px;
+          font-weight: 400;
+          line-height: 1.6;
+          letter-spacing: -0.018em;
         }
 
         address {
           font-size: 14px;
 
-          p:last-child{
+          p:last-child {
             margin-top: 10px;
           }
         }
