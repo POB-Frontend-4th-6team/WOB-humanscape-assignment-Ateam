@@ -31,14 +31,10 @@ const Result = () => {
     let result: IDiseaseItem[]
     if (!data) {
       result = []
-    } else if (!Array.isArray(data)) {
-      result = [data]
-      if (!searchText) return
-      result.unshift({ sickCd: 'first', sickNm: searchText })
     } else {
-      result = data
       if (!searchText) return
-      result.unshift({ sickCd: 'first', sickNm: searchText })
+      result = !Array.isArray(data) ? [data] : data
+      result = [{ sickCd: 'first', sickNm: searchText }, ...result]
     }
     dispatch(setDiseaseItems(result))
   }, [data, dispatch, searchText])
