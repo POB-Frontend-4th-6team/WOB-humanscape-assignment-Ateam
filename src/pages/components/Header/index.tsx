@@ -8,10 +8,12 @@ const Header = () => {
         <div className={styles.left}>
           <HeaderIcon />
         </div>
-        <div className={styles.rghit}>
-          <p>소식받기</p>
-          <p>제휴/문의</p>
-        </div>
+        <nav className={styles.right}>
+          <ul>
+            <li>소식받기</li>
+            <li>제휴/문의</li>
+          </ul>
+        </nav>
       </div>
     </header>
   )
