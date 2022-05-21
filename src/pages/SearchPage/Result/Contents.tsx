@@ -15,7 +15,7 @@ const Contents = ({ searchText, isLoading, diseaseItems }: IProps) => {
 
   return (
     <>
-      <h2>추천 검색어</h2>
+      <h3>추천 검색어</h3>
       <ul className={styles.resultBox}>
         <List searchText={searchText} diseaseItems={diseaseItems} />
       </ul>
