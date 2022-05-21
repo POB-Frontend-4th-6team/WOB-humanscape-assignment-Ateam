@@ -7,26 +7,25 @@ import { SearchIcon } from 'assets/svgs'
 import { cx } from 'styles'
 
 interface Props {
-  diseaseItems: IDiseaseItem[]
   searchText: string
+  diseaseItems: IDiseaseItem[]
 }
 
-const List = ({ diseaseItems, searchText }: Props) => {
+const List = ({ searchText, diseaseItems }: Props) => {
   const moveNum = useAppSelector(getMoveNum)
 
   const diseaseItem = (list: IDiseaseItem) => {
     let nowIndex = 0
-    return (
-      <p className={styles.title}>
-        {list.sickNm.split('').map((w) => {
-          if (nowIndex < searchText.length && w === searchText[nowIndex]) {
-            nowIndex += 1
-            return <mark key={`bold-key-${nowIndex}`}>{w}</mark>
-          }
-          return w
-        })}
-      </p>
-    )
+
+    const boldText = list.sickNm.split('').map((w) => {
+      if (nowIndex < searchText.length && w === searchText[nowIndex]) {
+        nowIndex += 1
+        return <mark key={`bold-key-${nowIndex}`}>{w}</mark>
+      }
+      return w
+    })
+
+    return <p className={styles.title}>{boldText}</p>
   }
 
   return (
