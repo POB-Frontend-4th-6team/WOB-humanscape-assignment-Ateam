@@ -1,4 +1,26 @@
 # Human Scape Search Recommend Web
+## 파일 구조
+```
+├─assets
+│  └─svgs
+├─hooks
+│  └─worker
+├─pages
+│  ├─components
+│  │  ├─Footer
+│  │  └─Header
+│  └─SearchPage
+│      ├─Input
+│      └─Result
+├─services
+├─states
+├─styles
+│  ├─base
+│  ├─constants
+│  └─mixins
+├─types
+└─utils
+```
 ## 사용 라이브러리
 - `@reduxjs/toolkit`
 - `axios`
