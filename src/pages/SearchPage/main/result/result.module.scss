@@ -44,6 +44,11 @@
         font-weight: 400;
         line-height: 1.6;
         letter-spacing: -0.018em;
+
+        mark {
+          font-weight: bold;
+          background-color: transparent;
+        }
       }
 
       .nowSearch {
