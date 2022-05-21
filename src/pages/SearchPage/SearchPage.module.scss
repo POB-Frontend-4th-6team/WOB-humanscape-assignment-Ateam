@@ -1,7 +1,6 @@
 @use '/src/styles/mixins/flexbox';
 
 .container {
-  // @include flexbox.flexbox(center, center);
   @include flexbox.flexbox(0, center);
   flex-direction: column;
   width: 100%;
