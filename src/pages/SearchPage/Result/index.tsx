@@ -3,7 +3,7 @@ import { getRegExp } from 'korean-regexp'
 
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
 import { getSearchText, getSplitSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
-import { getSerachData } from 'services/search'
+import { getSearchData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
 
 import styles from './result.module.scss'
@@ -18,7 +18,7 @@ const Result = () => {
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
     () =>
-      getSerachData(splitSearchText).then((res: any[]) => {
+      getSearchData(splitSearchText).then((res) => {
         const everyDataArray = []
 
         for (let i = 0; i < res.length; i += 1) {
@@ -70,22 +70,22 @@ const Result = () => {
 
   if (isLoading)
     return (
-      <div className={styles.section3}>
+      <section className={styles.resultContainer}>
         <span className={styles.loading}>검색중..</span>
-      </div>
+      </section>
     )
 
   if (diseaseItems.length === 0 && searchText)
     return (
-      <div className={styles.section3}>
+      <section className={styles.resultContainer}>
         <span className={styles.noResult}>검색어 없음</span>
-      </div>
+      </section>
     )
 
   if (!searchText) return <div />
 
   return (
-    <section className={styles.section3}>
+    <section className={styles.resultContainer}>
       <h2>추천 검색어</h2>
       <ul className={styles.resultBox}>
         <List diseaseItems={diseaseItems} searchText={searchText} />

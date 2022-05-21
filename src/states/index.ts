@@ -1,14 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import system from './system'
-import todo from './todo'
 import disease from './disease'
 import move from './move'
 
 export const store = configureStore({
   reducer: {
-    system,
-    todo,
     disease,
     move,
   },

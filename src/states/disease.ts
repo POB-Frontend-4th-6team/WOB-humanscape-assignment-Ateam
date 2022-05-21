@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IDiseaseItem } from 'types/disease.d'
 import type { RootState } from '.'
 
-export interface SearchState {
+export interface ISearchState {
   searchText: string
   splitSearchText: string[]
   items: IDiseaseItem[]
 }
 
-const INITAL_STATE: SearchState = {
+const INITAL_STATE: ISearchState = {
   searchText: '',
   splitSearchText: [],
   items: [],
@@ -18,13 +18,13 @@ export const diseaseSearchSlice = createSlice({
   name: 'dieaseSearch',
   initialState: INITAL_STATE,
   reducers: {
-    setSearchText: (state: SearchState, action: PayloadAction<string>) => {
+    setSearchText: (state: ISearchState, action: PayloadAction<string>) => {
       state.searchText = action.payload
     },
-    setSplitSearchText: (state: SearchState, action: PayloadAction<string[]>) => {
+    setSplitSearchText: (state: ISearchState, action: PayloadAction<string[]>) => {
       state.splitSearchText = action.payload
     },
-    setDiseaseItems: (state: SearchState, action: PayloadAction<IDiseaseItem[]>) => {
+    setDiseaseItems: (state: ISearchState, action: PayloadAction<IDiseaseItem[]>) => {
       state.items = action.payload
     },
   },

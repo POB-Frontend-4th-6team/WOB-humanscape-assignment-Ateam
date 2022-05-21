@@ -1,11 +1,11 @@
 import type { RootState } from '.'
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface MoveState {
+export interface IMoveState {
   moveNum: number
 }
 
-const INITAL_STATE: MoveState = {
+const INITAL_STATE: IMoveState = {
   moveNum: 0,
 }
 
@@ -13,13 +13,13 @@ export const indexLocation = createSlice({
   name: 'indexLocaiton',
   initialState: INITAL_STATE,
   reducers: {
-    setIncrease: (state: MoveState) => {
+    setIncrease: (state: IMoveState) => {
       state.moveNum += 1
     },
-    setDecrease: (state: MoveState) => {
+    setDecrease: (state: IMoveState) => {
       state.moveNum -= 1
     },
-    setReset: (state: MoveState) => {
+    setReset: (state: IMoveState) => {
       state.moveNum = 0
     },
   },
