@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query'
+import { getRegExp } from 'korean-regexp'
 
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
 import { getSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
@@ -12,9 +13,25 @@ const Result = () => {
   const dispatch = useAppDispatch()
   const searchText = useAppSelector(getSearchText) // 검색어
   const diseaseItems = useAppSelector(getDiseaseItems)
+
   const { data, isLoading } = useQuery(
     ['getDieaseApi', searchText],
-    () => getSerachData({ searchText }).then((res) => res.data.response.body.items.item),
+    () =>
+      getSerachData(searchText).then((res: any) => {
+        let everyDataArray = []
+
+        for (let i = 0; i < res.length; i += 1) {
+          everyDataArray.push(...res[i].data.response.body.items.item)
+        }
+
+        const noDuplicateArray = everyDataArray.filter(
+          (element, index, self) => index === self.findIndex((ele) => ele.sickCd === element.sickCd)
+        )
+
+        const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzySearchRegex))
+
+        return regexFilteredArray.slice(0, 10)
+      }),
     {
       enabled: !!searchText,
       refetchOnWindowFocus: false,
@@ -27,6 +44,13 @@ const Result = () => {
     }
   )
 
+  const fuzzySearchRegex = getRegExp(searchText.join(''), {
+    fuzzy: true,
+    ignoreCase: false,
+    ignoreSpace: true,
+    global: true,
+  })
+
   useEffect(() => {
     let result: IDiseaseItem[]
     if (!data) {
@@ -35,8 +59,8 @@ const Result = () => {
       if (!searchText) return
       result = !Array.isArray(data) ? [data] : data
       result = [{ sickCd: 'first', sickNm: searchText }, ...result]
-    } 
-    
+    }
+
     dispatch(setDiseaseItems(result))
   }, [data, dispatch, searchText])
 
