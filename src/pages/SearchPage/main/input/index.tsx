@@ -12,8 +12,10 @@ const Input = () => {
   const dispatch = useAppDispatch()
 
   const debounceFunc = debounce((value) => {
-    dispatch(setSearchText(value))
-  }, 500)
+    const searchTextToArray = value.split('')
+    const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word != ' ')
+    dispatch(setSearchText(arrayWithNoEmptyString))
+  }, 1000)
 
   const handleSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
