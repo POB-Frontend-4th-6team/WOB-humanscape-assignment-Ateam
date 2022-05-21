@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query'
+import { getRegExp } from 'korean-regexp'
 
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
-import { getSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
+import { getSearchText, getSplitSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
 import { getSerachData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
 
@@ -12,40 +13,69 @@ import classnames from 'classnames'
 
 const Result = () => {
   const dispatch = useAppDispatch()
-  const searchText = useAppSelector(getSearchText) // 검색어
+  const searchText = useAppSelector(getSearchText)
+  const splitSearchText = useAppSelector(getSplitSearchText)
   const diseaseItems = useAppSelector(getDiseaseItems)
   const moveNum = useAppSelector(getMoveNum)
 
   const { data, isLoading } = useQuery(
-    ['getDieaseApi', searchText],
-    () => getSerachData({ searchText }).then((res) => res.data.response.body.items.item),
+    ['getDieaseApi', splitSearchText],
+    () =>
+      getSerachData(splitSearchText).then((res: any[]) => {
+        const everyDataArray = []
+
+        for (let i = 0; i < res.length; i += 1) {
+          if (res[i].data.response.body.items.item) {
+            everyDataArray.push(...res[i].data.response.body.items.item)
+          }
+        }
+
+        if (everyDataArray) {
+          const noDuplicateArray = everyDataArray.filter(
+            (element, index, self) => index === self.findIndex((ele) => ele.sickCd === element.sickCd)
+          )
+
+          const regexFilteredArray = noDuplicateArray.filter((disease) => disease.sickNm.match(fuzzySearchRegex))
+
+          return regexFilteredArray.slice(0, 10)
+        }
+
+        return []
+      }),
     {
-      enabled: !!searchText,
+      enabled: !!splitSearchText,
       refetchOnWindowFocus: false,
       useErrorBoundary: true,
       cacheTime: 5 * 10 * 1000,
       staleTime: 5 * 10 * 1000,
       onSuccess: () => {
-        console.log(searchText, '검색어로 api 호출')
+        console.log(splitSearchText, '검색어로 api 호출')
       },
     }
   )
 
+  const fuzzySearchRegex = getRegExp(splitSearchText.join(''), {
+    fuzzy: true,
+    ignoreCase: false,
+    ignoreSpace: true,
+    global: true,
+  })
+
   useEffect(() => {
     let result: IDiseaseItem[]
-    if (!data) {
+    if (data?.length === 0 || data === undefined) {
       result = []
     } else {
       if (!searchText) return
       result = !Array.isArray(data) ? [data] : data
       result = [{ sickCd: 'first', sickNm: searchText }, ...result]
     }
+
     dispatch(setDiseaseItems(result))
   }, [data, dispatch, searchText])
 
   if (isLoading)
     return (
-      // 컴포넌트화 시키기
       <div className={styles.section3}>
         <span className={styles.loading}>검색중..</span>
       </div>
@@ -53,13 +83,12 @@ const Result = () => {
 
   if (diseaseItems.length === 0 && searchText)
     return (
-      // 컴포넌트화 시키기
       <div className={styles.section3}>
         <span className={styles.noResult}>검색어 없음</span>
       </div>
     )
 
-  if (diseaseItems.length === 0) return <div />
+  if (!searchText) return <div />
 
   return (
     <section className={styles.section3}>

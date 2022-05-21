@@ -1,11 +1,11 @@
-import { SearchIcon } from 'assets/svgs'
-import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, KeyboardEvent } from 'react'
 import { debounce } from 'lodash'
-import { useAppDispatch, useAppSelector } from 'hooks'
+import { useAppDispatch, useAppSelector, useCallback, useEffect, useState } from 'hooks'
 import { getDiseaseItems, setSearchText } from 'states/disease'
+import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
 
 import styles from './input.module.scss'
-import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
+import { SearchIcon } from 'assets/svgs'
 
 const Input = () => {
   const diseaseItems = useAppSelector(getDiseaseItems)
@@ -16,9 +16,22 @@ const Input = () => {
 
   const dispatch = useAppDispatch()
 
-  const debounceFunc = debounce((value) => {
-    dispatch(setSearchText(value))
-  }, 500)
+  const changeTextToArrayWithNoEmptyString = (value: string) => {
+    const searchTextToArray = value.split('')
+    const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word !== ' ')
+
+    return arrayWithNoEmptyString
+  }
+
+  const debounceFunc = useMemo(
+    () =>
+      debounce((value) => {
+        const textArray = changeTextToArrayWithNoEmptyString(value)
+        dispatch(setSearchText(value))
+        dispatch(setSplitSearchText(textArray))
+      }, 700),
+    [dispatch]
+  )
 
   const handleSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {

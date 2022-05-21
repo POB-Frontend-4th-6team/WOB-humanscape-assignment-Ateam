@@ -1,5 +1,5 @@
 export interface IDiseaseParams {
-  searchText: string | undefined
+  splitSearchText: string[]
 }
 
 export interface IDiseaseItem {
@@ -7,9 +7,10 @@ export interface IDiseaseItem {
   sickNm: string | undefined
 }
 
-// export interface IDiseaseItems {
-//   item: IDiseaseItem[]
-// }
+// 원래 주석
+export interface IDiseaseItems {
+  item: IDiseaseItem[]
+}
 
 export interface IBody {
   items: { item: IDiseaseItem[] }
