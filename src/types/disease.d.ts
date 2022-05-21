@@ -1,5 +1,5 @@
 export interface IDiseaseParams {
-  searchText: string | undefined
+  splitSearchText: string[]
 }
 
 export interface IDiseaseItem {

@@ -2,7 +2,7 @@ import { SearchIcon } from 'assets/svgs'
 import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useEffect, useState, useMemo } from 'react'
 import { debounce } from 'lodash'
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { getDiseaseItems, setSearchText } from 'states/disease'
+import { getDiseaseItems, setSearchText, setSplitSearchText } from 'states/disease'
 
 import styles from './input.module.scss'
 
@@ -17,7 +17,7 @@ const Input = () => {
 
   const changeTextToArrayWithNoEmptyString = (value: string) => {
     const searchTextToArray = value.split('')
-    const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word != ' ')
+    const arrayWithNoEmptyString = searchTextToArray.filter((word: string) => word !== ' ')
 
     return arrayWithNoEmptyString
   }
@@ -25,8 +25,9 @@ const Input = () => {
   const debounceFunc = useMemo(
     () =>
       debounce((value) => {
-        // const textArray = changeTextToArrayWithNoEmptyString(value)
+        const textArray = changeTextToArrayWithNoEmptyString(value)
         dispatch(setSearchText(value))
+        dispatch(setSplitSearchText(textArray))
       }, 700),
     [dispatch]
   )
