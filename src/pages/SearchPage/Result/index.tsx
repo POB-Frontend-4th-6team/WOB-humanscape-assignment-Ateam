@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { getRegExp } from 'korean-regexp'
 
-import { useAppDispatch, useAppSelector, useEffect } from 'hooks'
+import { useAppDispatch, useAppSelector, useEffect, useState } from 'hooks'
 import { getSearchText, getSplitSearchText, getDiseaseItems, setDiseaseItems } from 'states/disease'
 import { getSearchData } from 'services/search'
 import { IDiseaseItem } from 'types/disease.d'
@@ -10,6 +10,8 @@ import styles from './result.module.scss'
 import List from './List'
 
 const Result = () => {
+  const [count, setCount] = useState(0)
+
   const dispatch = useAppDispatch()
   const searchText = useAppSelector(getSearchText)
   const splitSearchText = useAppSelector(getSplitSearchText)
@@ -18,7 +20,7 @@ const Result = () => {
   const { data, isLoading } = useQuery(
     ['getDieaseApi', splitSearchText],
     () =>
-      getSearchData(splitSearchText).then((res) => {
+      getSearchData(splitSearchText, setCount).then((res) => {
         const everyDataArray = []
 
         for (let i = 0; i < res.length; i += 1) {
@@ -40,11 +42,15 @@ const Result = () => {
         return []
       }),
     {
-      enabled: !!splitSearchText,
+      enabled: splitSearchText.length > 0,
       refetchOnWindowFocus: false,
       useErrorBoundary: true,
       cacheTime: 5 * 10 * 1000,
       staleTime: 5 * 10 * 1000,
+      onSuccess: () => {
+        // eslint-disable-next-line no-console
+        console.log('총 api 호출 횟수: ', count)
+      },
     }
   )
 
