@@ -5,12 +5,13 @@ import { useAppDispatch, useAppSelector } from 'hooks'
 import { getDiseaseItems, setSearchText } from 'states/disease'
 
 import styles from './input.module.scss'
+import { getMoveNum, setDecrease, setIncrease, setReset } from 'states/move'
 
 const Input = () => {
   const diseaseItems = useAppSelector(getDiseaseItems)
+  const moveNum = useAppSelector(getMoveNum)
 
   const [disease, setDisease] = useState<string | undefined>('')
-  const [moveNum, setMoveNum] = useState(0)
   const [isMoveOn, setIsMoveOn] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -24,9 +25,9 @@ const Input = () => {
       setDisease(e.currentTarget.value)
       if (isMoveOn) return
       debounceFunc(e.currentTarget.value)
-      setMoveNum(0)
+      dispatch(setReset())
     },
-    [debounceFunc, setDisease, isMoveOn]
+    [debounceFunc, setDisease, isMoveOn, dispatch]
   )
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -37,10 +38,10 @@ const Input = () => {
     setIsMoveOn(false)
     if (diseaseItems.length === 0 || e.nativeEvent.isComposing) return
     if (e.key === 'ArrowUp' && moveNum) {
-      setMoveNum((prev) => prev - 1)
+      dispatch(setDecrease())
       setIsMoveOn(true)
     } else if (e.key === 'ArrowDown' && moveNum < Number(diseaseItems.length) - 1) {
-      setMoveNum((prev) => prev + 1)
+      dispatch(setIncrease())
       setIsMoveOn(true)
     }
   }
