@@ -66,7 +66,7 @@ const Input = () => {
   }, [moveNum, diseaseItems, isMoveOn])
 
   return (
-    <section className={styles.section2}>
+    <section>
       <form className={styles.inputBox} onSubmit={handleSubmit}>
         <div className={styles.iconBox}>
           <SearchIcon width='20px' height='20px' />

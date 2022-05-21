@@ -70,22 +70,22 @@ const Result = () => {
 
   if (isLoading)
     return (
-      <div className={styles.section3}>
+      <section className={styles.resultContainer}>
         <span className={styles.loading}>검색중..</span>
-      </div>
+      </section>
     )
 
   if (diseaseItems.length === 0 && searchText)
     return (
-      <div className={styles.section3}>
+      <section className={styles.resultContainer}>
         <span className={styles.noResult}>검색어 없음</span>
-      </div>
+      </section>
     )
 
   if (!searchText) return <div />
 
   return (
-    <section className={styles.section3}>
+    <section className={styles.resultContainer}>
       <h2>추천 검색어</h2>
       <ul className={styles.resultBox}>
         <List diseaseItems={diseaseItems} searchText={searchText} />
