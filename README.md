@@ -64,12 +64,16 @@
 1. 검색창 클릭 후 질병명 입력
 
 ![image](https://user-images.githubusercontent.com/52916848/169663521-76ee8d6b-ef2f-465b-b36c-e71f5eee5c5f.png)
+
 - 유의 사항: API 요청이 느리므로 결과값을 받아오기 전까지 약간의 시간이 소요됨.
+
 
 2. 입력 후 추천 검색어 결과
 
 ![image](https://user-images.githubusercontent.com/52916848/169663571-df444d67-14b0-46d8-8b00-b8ce5e2e4c69.png)
+
 - 입력한 단어와 매칭되는 부분은 bold 처리.
+
 
 3. 입력창에 포커스 되어 있을 때 키보드 아래, 위 버튼 이벤트
 
